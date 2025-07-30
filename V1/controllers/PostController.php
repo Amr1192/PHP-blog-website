@@ -4,6 +4,8 @@ class PostController extends Controller {
 
   public function index()
     {
+         $auth = new AuthController('Not Found');
+    $auth->Authenticate();
     $this->render('main/layout');
     $db = Database::getInstance();
     $stmt = $db->query('select * from posts');
@@ -39,23 +41,46 @@ class PostController extends Controller {
         view('main/NotFound');
     }}
 
-    public function show($id)
+    public function show()
     {
+      $id = $_GET['id'];
+
         $this->render('main/layout');
+        $db = Database::getInstance();
+         $stmt = $db->query('select * from posts where id = :id',['id'=>$id]);
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
+        view('posts/post',['post'=>$post]);
     }
 
-    public function edit($id)
-    {
-        $this->render('main/layout');
-    }
 
-    public function update($id)
+    public function update()
     {
+        $id = $_GET['id'];
           $this->render('main/layout');
+          view('posts/postUpdate');
+    }
+    public function updated()
+    {
+        $id = $_GET['id'];
+        $title  = $_POST['title'];
+        $body  = $_POST['body'];
+          $this->render('main/layout');
+          view('posts/postUpdate');
+           $db = Database::getInstance();
+    $stmt = $db->query('update posts set title = :title , body = :body where id = :id',[
+      'id'=>$id,
+      'title'=>$title,
+      'body'=>$body,
+    ]);
+        header('location:/posts');
     }
 
-    public function destroy($id)
-    {
-        $this->render('main/layout'); 
-    }
+  public function destroy()  {
+    $id = $_GET['id'];
+    $this->render('main/layout');
+            $db = Database::getInstance();
+    $stmt = $db->query('delete from posts where id = :id',['id'=>$id]);
+        header('location:/posts');
+
+  }
 }

@@ -64,5 +64,22 @@ class AuthController extends Controller {
       
     }
 
-  
-}
+
+      public function Authenticate() {
+      if (!isset($_SESSION['user']) && !isset($_SESSION['email'])) {
+      $this->render('main/layout');
+        http_response_code(404);
+        echo "<h3>Log in to view this page</h3>";
+        view('main/NotFound');
+       die;
+      }
+    }
+      public function Authorize($id) {
+      if ($sgffg) {
+      $this->render('main/layout');
+        http_response_code(403);
+        view('main/unauthorized');
+       die;
+      }
+      }
+  }

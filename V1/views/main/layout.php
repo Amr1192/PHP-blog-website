@@ -52,6 +52,9 @@
     <?= isset($_SESSION['user']) || isset($_SESSION['email']) ? '<a class="nav-link" href="/posts">Posts</a>' : '' ?>
   </li>
   <li class="nav-item">
+    <?= isset($_SESSION['user']) || isset($_SESSION['email']) ? '<a class="nav-link" href="/posts/create">create post</a>' : '' ?>
+  </li>
+  <li class="nav-item">
     <?= isset($_SESSION['user']) || isset($_SESSION['email']) ? 
         "<form method='POST' action='/logout'>
            <button type='submit' class='nav-link'>Logout</button>
