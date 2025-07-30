@@ -26,8 +26,9 @@ class PostController extends Controller {
         $this->render('main/layout');
         $validations = new Validations();
         $validations->postRegister($_POST);
-        $errors = $validations->getErrors();
-        if (empty($errors)) {
+           $_SESSION['errors'] = $validations->getErrors();
+           $_SESSION['old'] = $_POST;
+        if (empty($_SESSION['errors'])) {
          $db = Database::getInstance();
          $query = 'insert into posts (title,body,user_id) values (:title, :body, :user_id)';
          $stmt = $db->query($query,[
@@ -37,8 +38,7 @@ class PostController extends Controller {
     ]);
       header('location:/posts');
       }else {
-        dd($errors);
-        view('main/NotFound');
+       header('location:/posts/create');
     }}
 
     public function show()

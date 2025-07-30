@@ -6,10 +6,10 @@
         <div class="form-group">
           <label for="title" class="form-label mb-3">Title</label>
           <input type="text" name="title" id="title" placeholder="Title" class="form-control mb-3">
-            <p style="color: red;"><?= $errors['title']?? ''?></p>
+            <p style="color: red;"><?= $_SESSION['errors']['title']?? ''?></p>
           <label for="body" class="form-label mb-3">Body</label>
           <input type="text" name="body" id="body" placeholder="Body" class="form-control mb-3">
-          <p style="color: red;"><?= $errors['body']?? ''?></p>
+          <p style="color: red;"><?= $_SESSION['errors']['body']?? ''?></p>
 
         </div>
           <label for="body" class="form-label mb-3">User Id</label>
@@ -19,4 +19,9 @@
       </form>
     </div>
   </div>
+
+    <?php
+  unset($_SESSION['errors']);
+  unset($_SESSION['old']);
+
 
